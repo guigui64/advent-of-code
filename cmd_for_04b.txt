@@ -1,0 +1,1 @@
+python 04b.py | grep -B 1 north

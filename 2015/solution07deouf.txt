@@ -1,0 +1,4 @@
+cat 07.txt | sed 's/\([^-]*\) \-> \([a-z]*\)/int \2 = \1\;/;s/NOT /~/;s/RSHIFT/>>/;s/LSHIFT/<</;s/AND/\&/;s/OR/|/' | sort -k2 | awk '{ line[length($2)][counter[length($2)]++] = $0 } END { for (i in line) for (j in line[i]) print line[i][j] }'
+
+
+dans Test.java --> 46065

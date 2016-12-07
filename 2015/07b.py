@@ -1,6 +1,8 @@
 def getsignal(key):
     op = signals[key]
     done = False
+    if op.isdigit():
+        return int(op)
     for operation in operations:
         if operation in op:
             loperand, roperand = op.split(operation)
@@ -40,5 +42,6 @@ f = open("07.txt", "r")
 for line in f.readlines():
     op, id = line[:-1].replace(' ','').split("->")
     signals[id] = op
+signals["b"] = "46065"
 
 print getsignal("a")

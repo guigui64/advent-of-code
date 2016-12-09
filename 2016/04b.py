@@ -13,3 +13,5 @@ for line in f.readlines():
             idx = (idx+id)%len(alphabet)
             newletters += alphabet[idx]
     print "->", newletters
+
+# run this command to get the id : "python 04b.py | grep -B 1 north"

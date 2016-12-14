@@ -19,6 +19,8 @@ validhashes = []
 i = 0
 while len(validhashes) < 64:
     hash = md5("{}{}".format(input,i).encode()).hexdigest()
+    for _ in range(2016):
+        hash = md5(hash.encode()).hexdigest()
     letter = findletterntimes(hash, 3)
     if letter:
         # print(hash)

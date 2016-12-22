@@ -1,0 +1,60 @@
+####################################################
+####### NOT WORKING SOLUTION... ####################
+####################################################
+
+from heapq import *
+from itertools import permutations
+
+def best_first_search(init, victory, score, valid_moves):
+best = 99999999999999999999999999999999999999
+queue = []
+heappush(queue, (0, init))
+
+while len(queue) > 0:
+    _, state = heappop(queue)
+
+    # victory() is a function that return (bool, int)
+    reached, moves = victory(state)
+    if reached:
+        print("Success @", moves)
+        if moves < best:
+            best = moves
+            continue
+
+    # valid_moves generates adjacent states
+    for move in valid_moves(state):
+        # score prioritizes states (lower is better)
+        sc = score(move)
+        heappush(queue, (sc, move))
+
+return best
+
+def victory(state):
+target, _, moves = state
+if target.x == 0 and target.y == 0:
+    return (True, moves)
+return (False, None)
+
+# lower is better
+def score(state):
+target, nodes, _ = state
+sc = target.x + target.y
+for a, b in compute_viables(nodes):
+    if a == target or (a.x, a.y) == (0, 0):
+        sc += abs(a.x - b.x) + abs(a.y - b.y)
+return sc
+
+def valid_moves(state):
+target, nodes, moves = state
+# for (dx, dy), (dx2, dy2) in permutations([(0,0), (1,0), (0,1), (-1,0), (0,-1)], 2):
+for dx, dy in [(1,0), (0,1), (-1,0), (0,-1)]:
+    nx = target.x + dx
+    ny = target.y + dy
+    if nx < 0 or ny < 0:
+        continue
+
+    for a, b in compute_viables(nodes):
+        if a == target and (b.x, b.y) == (nx, ny):
+            target.move_in(b)
+            target = b
+            yield((target, nodes, moves + 1))

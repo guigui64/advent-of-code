@@ -12,14 +12,13 @@ def solve(map):
     while True:
         if i >= len(instructions):
             break
-        # if i == 4 and map['b'] != 0 and map['d'] != 0:
-        #     map['a'] = map['b']*map['d']
-        #     map['b'] = 0
-        #     map['d'] = 0
-        #     i = 10
-        #     continue
+        if i == 4 and map['b'] != 0 and map['d'] != 0:
+            map['a'] = map['b']*map['d']
+            map['c'] = 0
+            map['d'] = 0
+            i = 10
+            continue
         inst = instructions[i]
-        # print(inst)
         if   inst.startswith("cpy"):
             x, y = inst.split()[1:]
             if y.isalpha():
@@ -28,7 +27,6 @@ def solve(map):
             x, y = [value(z) for z in inst.split()[1:]]
             if x != 0:
                 i += y
-                # print(map)
                 continue
         elif inst.startswith("inc"):
             x = inst.split()[1]
@@ -43,10 +41,8 @@ def solve(map):
             x = value(x)
             if (i + x) < 0 or (i + x) >= len(instructions):
                 i += 1
-                # print(map)
                 continue
             target = instructions[i + x]
-            # print("Target is", target)
             if target.startswith("inc"):
                 target = target.replace("inc", "dec")
             elif target[:3] in ("dec", "tgl"):
@@ -55,9 +51,7 @@ def solve(map):
                 target = target.replace("jnz", "cpy")
             else:
                 target = target.replace(target[:3], "jnz")
-            # print("Target becomes", target)
             instructions[i + x] = target
-        # print(map)
         i += 1
 
 # Part 1

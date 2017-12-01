@@ -7,17 +7,12 @@ def value(x):
         return int(x)
 
 def solve(map):
-    instructions = [line.strip() for line in open("23.txt", "r").readlines()]
+    instructions = [line.strip() for line in open("25.txt", "r").readlines()]
     i = 0
+    out = 1
     while True:
         if i >= len(instructions):
             break
-        if i == 4 and map['b'] != 0 and map['d'] != 0:
-            map['a'] = map['b']*map['d']
-            map['c'] = 0
-            map['d'] = 0
-            i = 10
-            continue
         inst = instructions[i]
         if   inst.startswith("cpy"):
             x, y = inst.split()[1:]
@@ -52,16 +47,21 @@ def solve(map):
             else:
                 target = target.replace(target[:3], "jnz")
             instructions[i + x] = target
+        elif inst.startswith("out"):
+            x = inst.split()[1]
+            x = value(x)
+            if x == (out + 1) % 2:
+                out = x
+            else:
+                return False
         i += 1
 
 # Part 1
-map = defaultdict(int)
-map['a'] = 7
-solve(map)
-print(map['a'])
-
-# Part 2
-map = defaultdict(int)
-map['a'] = 12
-solve(map)
-print(map['a'])
+a = 1
+while True:
+    map = defaultdict(int)
+    map['a'] = a
+    print("Testing", a)
+    if not solve(map):
+        print("Wrong !")
+        a += 1

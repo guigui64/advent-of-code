@@ -1,0 +1,163 @@
+package main
+
+import "fmt"
+
+type Square struct {
+	V          int
+	U, D, L, R *Square
+	Visited    bool
+}
+
+func (s Square) String() string {
+	var r, l, u, d int
+	if s.R != nil {
+		r = s.R.V
+	}
+	if s.L != nil {
+		l = s.L.V
+	}
+	if s.U != nil {
+		u = s.U.V
+	}
+	if s.D != nil {
+		d = s.D.V
+	}
+	return fmt.Sprint("R ", r, " L ", l, " U ", u, " D ", d)
+}
+
+func NewSquare() *Square {
+	return &Square{}
+}
+
+func move(dir string, v int, s *Square) *Square {
+	// fmt.Println("move", dir)
+	switch dir {
+	case "U":
+		s.U = NewSquare()
+		s.U.V = v
+		s.U.D = s
+		s = s.U
+		s.D.U = s
+		if s.D.L != nil {
+			s.L = s.D.L.U
+		}
+	case "L":
+		s.L = NewSquare()
+		s.L.V = v
+		s.L.R = s
+		s = s.L
+		s.R.L = s
+		if s.R.D != nil {
+			s.D = s.R.D.L
+		}
+	case "D":
+		s.D = NewSquare()
+		s.D.V = v
+		s.D.U = s
+		s = s.D
+		s.U.D = s
+		if s.U.R != nil {
+			s.R = s.U.R.D
+		}
+	case "R":
+		s.R = NewSquare()
+		s.R.V = v
+		s.R.L = s
+		s = s.R
+		s.L.R = s
+		if s.L.U != nil {
+			s.U = s.L.U.R
+		}
+	default:
+		panic(fmt.Sprint("dir", dir, "not handled !"))
+	}
+	return s
+}
+
+func buildGrid(in int) (grid Square) {
+	n := 1
+	grid.V = n
+	n += 1
+	csq := &grid
+	for n <= in {
+		// fmt.Println(csq)
+		if csq.R == nil && csq.L == nil && csq.U == nil && csq.D == nil {
+			// first move is right
+			csq = move("R", n, csq)
+		} else if csq.L != nil {
+			if csq.U == nil {
+				// turn Up
+				csq = move("U", n, csq)
+			} else {
+				// keep Right
+				csq = move("R", n, csq)
+			}
+		} else if csq.D != nil {
+			if csq.L == nil {
+				// turn Left
+				csq = move("L", n, csq)
+			} else {
+				// keep Up
+				csq = move("U", n, csq)
+			}
+		} else if csq.R != nil {
+			if csq.D == nil {
+				// turn Down
+				csq = move("D", n, csq)
+			} else {
+				// keep Left
+				csq = move("L", n, csq)
+			}
+		} else if csq.U != nil {
+			if csq.R == nil {
+				// turn Right
+				csq = move("R", n, csq)
+			} else {
+				// keep Down
+				csq = move("D", n, csq)
+			}
+		}
+		n += 1
+	}
+	return
+}
+
+func find(s *Square, target int, ch chan int, dist int) {
+	s.Visited = true
+	fmt.Println("On", s.V, "after", dist)
+	if s.V == target {
+		ch <- dist
+	} else {
+		dist += 1
+		if s.R != nil && !s.R.Visited {
+			go find(s.R, target, ch, dist)
+		}
+		if s.L != nil && !s.L.Visited {
+			go find(s.L, target, ch, dist)
+		}
+		if s.U != nil && !s.U.Visited {
+			go find(s.U, target, ch, dist)
+		}
+		if s.D != nil && !s.D.Visited {
+			go find(s.D, target, ch, dist)
+		}
+	}
+}
+
+func compute(in int) int {
+	grid := buildGrid(in)
+	ch := make(chan int)
+	go find(&grid, in, ch, 0)
+	return <-ch
+}
+
+func main() {
+	fmt.Println("Examples")
+	//fmt.Println(compute(1))
+	fmt.Println(compute(12))
+	//fmt.Println(compute(23))
+	//fmt.Println(compute(1024))
+	fmt.Println("\nPart1")
+	//fmt.Println(compute(265149))
+	fmt.Println("\nPart2")
+}

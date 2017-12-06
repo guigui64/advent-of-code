@@ -18,15 +18,27 @@ func max(s []int) (imax, vmax int) {
 	return
 }
 
-type States []string
+type States [][]int
 
 func (s States) hasState(v []int) (bool, int) {
 	for i, sv := range s {
-		if sv == fmt.Sprint(v) {
+		if equals(sv, v) {
 			return true, i
 		}
 	}
 	return false, 0
+}
+
+func equals(a, b []int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func compute(blocks []int) (redist, loop int) {
@@ -36,7 +48,9 @@ func compute(blocks []int) (redist, loop int) {
 			loop = redist - iprev
 			break
 		}
-		previousStates = append(previousStates, fmt.Sprint(blocks))
+		blocksCopy := make([]int, len(blocks))
+		copy(blocksCopy, blocks)
+		previousStates = append(previousStates, blocksCopy)
 		imax, vmax := max(blocks)
 		blocks[imax] = 0
 		for i := 0; i < vmax; i++ {

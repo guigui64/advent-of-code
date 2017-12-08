@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"strconv"
-	"strings"
+
+	"github.com/guigui64/advent-of-code/goutils/aoc"
+	"github.com/guigui64/gcgo/utils"
 )
 
 func compute(jumps []int, part2 bool) int {
@@ -27,17 +28,12 @@ func compute(jumps []int, part2 bool) int {
 }
 
 func main() {
-	f, _ := ioutil.ReadFile("05.in")
-	lines := strings.Split(string(f), "\n")
+	matrix := aoc.ParseInput("05.in")
 	var jumps []int
-	for _, line := range lines {
-		if strings.TrimSpace(line) != "" {
-			i, ok := strconv.Atoi(line)
-			if ok != nil {
-				panic(ok)
-			}
-			jumps = append(jumps, i)
-		}
+	for _, fields := range matrix {
+		i, e := strconv.Atoi(fields[0])
+		utils.Check(e)
+		jumps = append(jumps, i)
 	}
 	jumps2 := make([]int, len(jumps))
 	fmt.Println("\nPART 1")

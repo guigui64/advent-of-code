@@ -4,13 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strconv"
-)
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
+	"github.com/guigui64/gcgo/utils"
+)
 
 func sum(s []int) int {
 	sum := 0
@@ -41,7 +37,7 @@ func convert(ascii []byte) []int {
 	res := make([]int, len(ascii))
 	for i := 0; i < len(ascii); i++ {
 		res[i], err = strconv.Atoi(string(ascii[i]))
-		check(err)
+		utils.Check(err)
 	}
 	return res
 }
@@ -49,7 +45,7 @@ func convert(ascii []byte) []int {
 func main() {
 
 	dat, err := ioutil.ReadFile("01.in")
-	check(err)
+	utils.Check(err)
 	fmt.Print(string(dat))
 
 	fmt.Println("Part 1")

@@ -2,42 +2,26 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"strconv"
-	"strings"
-)
 
-func minmax(s []int) (min, max int) {
-	min = s[0]
-	max = s[0]
-	for _, v := range s {
-		if v > max {
-			max = v
-		}
-		if v < min {
-			min = v
-		}
-	}
-	return
-}
+	"github.com/guigui64/advent-of-code/goutils/aoc"
+	"github.com/guigui64/gcgo/utils"
+)
 
 func checksum(sheet [][]int) int {
 	var sum int
 	for _, ssheet := range sheet {
-		min, max := minmax(ssheet)
-		sum += max - min
+		imin, imax := utils.MinMax(ssheet)
+		sum += ssheet[imax] - ssheet[imin]
 	}
 	return sum
 }
 
 func buildSheet(input string) (sheet [][]int) {
-	text, _ := ioutil.ReadFile(input)
-	for _, sline := range strings.Split(string(text), "\n") {
-		if len(strings.TrimSpace(sline)) == 0 {
-			continue
-		}
+	matrix := aoc.ParseInput(input)
+	for _, fields := range matrix {
 		var line []int
-		for _, field := range strings.Fields(sline) {
+		for _, field := range fields {
 			i, _ := strconv.Atoi(field)
 			line = append(line, i)
 		}

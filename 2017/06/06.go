@@ -2,21 +2,11 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"strconv"
-	"strings"
-)
 
-func max(s []int) (imax, vmax int) {
-	vmax = s[0]
-	for i, v := range s {
-		if v > vmax {
-			imax = i
-			vmax = v
-		}
-	}
-	return
-}
+	"github.com/guigui64/advent-of-code/goutils/aoc"
+	"github.com/guigui64/gcgo/utils"
+)
 
 type States [][]int
 
@@ -51,7 +41,7 @@ func compute(blocks []int) (redist, loop int) {
 		blocksCopy := make([]int, len(blocks))
 		copy(blocksCopy, blocks)
 		previousStates = append(previousStates, blocksCopy)
-		imax, vmax := max(blocks)
+		imax, vmax := utils.MaxIntSlice(blocks)
 		blocks[imax] = 0
 		for i := 0; i < vmax; i++ {
 			blocks[(imax+1+i)%len(blocks)] += 1
@@ -64,8 +54,7 @@ func compute(blocks []int) (redist, loop int) {
 func main() {
 	example := []int{0, 2, 7, 0}
 	fmt.Println(compute(example))
-	f, _ := ioutil.ReadFile("06.in")
-	fields := strings.Fields(string(f))
+	fields := aoc.ParseInput("06.in")[0]
 	input := make([]int, len(fields))
 	for i, s := range fields {
 		a, _ := strconv.Atoi(s)

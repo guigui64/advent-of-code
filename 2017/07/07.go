@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/guigui64/advent-of-code/goutils/aoc"
 )
 
 type Program struct {
@@ -28,14 +29,9 @@ func main() {
 	if len(os.Args) > 1 { // first is prog name
 		fileName = os.Args[1]
 	}
-	f, _ := ioutil.ReadFile(fileName)
-	lines := strings.Split(string(f), "\n")
+	input := aoc.ParseInput(fileName)
 	towers := make(map[string]Program)
-	for _, line := range lines {
-		if strings.TrimSpace(line) == "" {
-			continue
-		}
-		fields := strings.Fields(line)
+	for _, fields := range input {
 		name := fields[0]
 		weight, _ := strconv.Atoi(fields[1][1 : len(fields[1])-1])
 		program := Program{Weight: weight, Name: name}

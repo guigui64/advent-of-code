@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
-	"strings"
+
+	"github.com/guigui64/advent-of-code/goutils/aoc"
 )
 
 func main() {
@@ -14,15 +13,10 @@ func main() {
 	if len(os.Args) > 1 { // first is prog name
 		fileName = os.Args[1]
 	}
-	f, _ := ioutil.ReadFile(fileName)
-	lines := strings.Split(string(f), "\n")
+	input := aoc.ParseInput(fileName)
 	regs := make(map[string]int) // zero value is already 0 :)
 	highest := 0
-	for _, line := range lines {
-		if strings.TrimSpace(line) == "" {
-			continue
-		}
-		fields := strings.Fields(line)
+	for _, fields := range input {
 		condition := fields[4:]
 		reg := regs[condition[0]]
 		value, _ := strconv.Atoi(condition[2])
@@ -41,7 +35,7 @@ func main() {
 		case "!=":
 			doOp = reg != value
 		default:
-			log.Fatal("Impossible operator :", condition[1])
+			fmt.Println("ERROR : Impossible operator :", condition[1])
 		}
 		if doOp {
 			value, _ := strconv.Atoi(fields[2])

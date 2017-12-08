@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"sort"
-	"strings"
+
+	"github.com/guigui64/advent-of-code/goutils/aoc"
 )
 
 func uniq(words []string) bool {
@@ -49,14 +49,9 @@ func uniq2(words []string) bool {
 }
 
 func main() {
-	f, _ := ioutil.ReadFile("04.in")
-	lines := strings.Split(string(f), "\n")
+	input := aoc.ParseInput("04.in")
 	sum := 0
-	for _, line := range lines {
-		if strings.TrimSpace(line) == "" {
-			continue
-		}
-		words := strings.Fields(line)
+	for _, words := range input {
 		valid := uniq(words)
 		fmt.Println(words, "->", valid)
 		if valid {
@@ -66,11 +61,7 @@ func main() {
 	fmt.Println("Part 1 :", sum)
 
 	sum = 0
-	for _, line := range lines {
-		if strings.TrimSpace(line) == "" {
-			continue
-		}
-		words := strings.Fields(line)
+	for _, words := range input {
 		valid := uniq2(words)
 		fmt.Println(words, "->", valid)
 		if valid {

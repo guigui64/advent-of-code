@@ -1,0 +1,12 @@
+s/n,s,//g
+s/s,n,//g
+s/se,nw,//g
+s/nw,se,//g
+s/ne,sw,//g
+s/sw,ne,//g
+s/ne,\(.*\)sw/\1/g
+s/sw,\(.*\)ne/\1/g
+s/s,\(.*\)n/\1/g
+s/n,\(.*\)s/\1/g
+s/se,\(.*\)nw/\1/g
+s/nw,\(.*\)se/\1/g

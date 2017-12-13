@@ -14,6 +14,17 @@ func ReadAndCheckFile(fileName string) []byte {
 	return f
 }
 
+func ReadLines(fileName string) []string {
+	f := ReadAndCheckFile(fileName)
+	var lines []string
+	for _, line := range strings.Split(string(f), "\n") {
+		if strings.TrimSpace(line) != "" {
+			lines = append(lines, line)
+		}
+	}
+	return lines
+}
+
 func ParseInput(fileName string) [][]string {
 	file := ReadAndCheckFile(fileName)
 	var fieldsMatrix [][]string

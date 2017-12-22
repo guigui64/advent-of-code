@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/guigui64/advent-of-code/goutils/aoc"
 )
@@ -36,12 +37,16 @@ func part2(instr []string) {
 			fields := strings.Fields(instr[i])
 			switch fields[0] {
 			case "snd":
-				v := valueOf(registers, fields[1])
-				fmt.Println(id, ": send", v)
-				send <- v
-				count++
-				if id == 1 {
-					fmt.Println(count)
+				select {
+				case send <- valueOf(registers, fields[1]):
+					fmt.Println(id, ": send", valueOf(registers, fields[1]))
+					count++
+					if id == 1 {
+						fmt.Println(count)
+					}
+				case <-time.After(time.Second):
+					panic("timeout at send")
+					return
 				}
 			case "set":
 				registers[fields[1]] = valueOf(registers, fields[2])
@@ -52,9 +57,13 @@ func part2(instr []string) {
 			case "mod":
 				registers[fields[1]] %= valueOf(registers, fields[2])
 			case "rcv":
-				v := <-rec
-				fmt.Println(id, ": received", v)
-				registers[fields[1]] = v
+				select {
+				case registers[fields[1]] = <-rec:
+					fmt.Println(id, ": received", registers[fields[1]])
+				case <-time.After(time.Second):
+					panic("timeout at receive")
+					return
+				}
 			case "jgz":
 				if valueOf(registers, fields[1]) != 0 {
 					i += valueOf(registers, fields[2])

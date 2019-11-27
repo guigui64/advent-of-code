@@ -1,0 +1,11 @@
+const { all } = require('./#year#-#day#');
+
+// Example
+let input=``;
+
+console.log(all(input));
+
+// Real input
+input=``;
+
+console.log(all(input));

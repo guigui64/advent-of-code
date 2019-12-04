@@ -4,15 +4,15 @@ import os
 def intcode(code):
     idx = 0
     while True:
-        if code[idx] == 1: # Add
-            code[code[idx+3]] = code[code[idx+1]] + code[code[idx+2]]
+        if code[idx] == 1:  # Add
+            code[code[idx + 3]] = code[code[idx + 1]] + code[code[idx + 2]]
             idx += 4
-        elif code[idx] == 2: # Mutliply
-            code[code[idx+3]] = code[code[idx+1]] * code[code[idx+2]]
+        elif code[idx] == 2:  # Mutliply
+            code[code[idx + 3]] = code[code[idx + 1]] * code[code[idx + 2]]
             idx += 4
-        elif code[idx] == 99: # Halt
+        elif code[idx] == 99:  # Halt
             return code[0]
-        else: # should not happen
+        else:  # should not happen
             print(f"Error, opcode {code[idx]} unknown at index {idx}")
             return -1
 
@@ -32,7 +32,7 @@ def part2(input, target):
             attempt[1] = noun
             attempt[2] = verb
             if intcode(attempt) == target:
-                return 100*noun + verb
+                return 100 * noun + verb
 
 
 if __name__ == "__main__":

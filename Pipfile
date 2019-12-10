@@ -8,6 +8,7 @@ isort = "*"
 
 [packages]
 anytree = "*"
+defaultlist = "*"
 
 [requires]
 python_version = "3.6"

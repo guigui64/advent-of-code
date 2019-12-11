@@ -1,8 +1,9 @@
+import math
 import os
 from collections import defaultdict
 
 
-def part1(input):
+def solve(input):
     asteroids = []  # list of coordinates
     for y in range(len(input)):
         for x in range(len(input[y])):
@@ -14,19 +15,41 @@ def part1(input):
             if (x, y) == (xx, yy):
                 continue
             if x == xx:
-                arctan = "y" if y > yy else "-y"
+                alpha = math.pi / 2 * (-1 if yy < y else 1)
+            elif y == yy:
+                alpha = 0 if xx > x else math.pi
             else:
-                arctan = (yy - y) / (xx - x)
-                if y > yy:
-                    arctan = f"-y{arctan}"
-                elif x > xx:
-                    arctan = f"-x{arctan}"
-            detections[(x, y)][arctan].append((xx, yy))
-    return max([len(detection) for detection in detections.values()])
+                alpha = math.atan2(yy - y, xx - x)
+            detections[(x, y)][alpha].append((xx, yy))
+    best_pos, best_detections_nb = max(
+        [(pos, len(detection)) for pos, detection in detections.items()],
+        key=lambda elt: elt[1],
+    )
 
+    targets = detections[best_pos]
+    laser_angles = sorted(targets.keys())
+    shift = 0
+    for i, a in enumerate(laser_angles):
+        shift = i
+        if a >= -math.pi / 2:
+            break
+    laser_angles = laser_angles[shift:] + laser_angles[:shift]
+    laser_idx = 0
+    nb_victims = 0
+    target_200 = None
+    while True:
+        laser = laser_angles[laser_idx]
+        if len(targets[laser]) > 0:
+            nb_victims += 1
+            if nb_victims == 200:
+                target_200 = targets[laser][0]
+                break
+            targets[laser] = targets[laser][1:]
+        laser_idx += 1
+        if laser_idx >= len(laser_angles):
+            laser_idx = 0
 
-def part2(input):
-    pass
+    return [best_detections_nb, target_200[0] * 100 + target_200[1]]
 
 
 if __name__ == "__main__":
@@ -35,5 +58,4 @@ if __name__ == "__main__":
     )
     with open(os.path.join(__location__, "./input_aoc.txt")) as f:
         input = [line.strip() for line in f.readlines()]
-        print(f"Part1 solution : {part1(input)}")
-        print(f"Part2 solution : {part2(input)}")
+        print(f"Solution : {solve(input)}")

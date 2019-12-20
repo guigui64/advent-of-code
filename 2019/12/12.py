@@ -1,7 +1,7 @@
 import os
 import re
-from itertools import combinations
 from copy import deepcopy
+from itertools import combinations
 from math import gcd
 
 regexp = r"(-?\d+).*?(-?\d+).*?(-?\d+)"

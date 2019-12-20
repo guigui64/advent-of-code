@@ -5,5 +5,5 @@
 YEAR=$1
 DAY=$2
 
-find $YEAR/$DAY | entr bash -c 'time python3.6 '$YEAR/$DAY/$DAY'.py'
+find $YEAR/$DAY | entr bash -c 'time PYTHONPATH='$YEAR' python3.6 '$YEAR/$DAY/$DAY'.py'
 

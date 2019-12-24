@@ -84,7 +84,7 @@ def intcode(name, code, in_queue, out_queue):
             return -1
 
 
-def intcodeList(name, code, in_list, out_queue):
+def intcodeLambda(name, code, in_func, out_queue):
     idx = 0
     relative_base = 0
     while True:
@@ -117,7 +117,7 @@ def intcodeList(name, code, in_list, out_queue):
             elif opcode == 3:  # Save input
                 length = 2
                 params_add = get_params_add(length)
-                input = in_list[0]
+                input = in_func()
                 code[params_add[0]] = input
                 idx += length
             elif opcode == 4:  # Output

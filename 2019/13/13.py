@@ -5,7 +5,7 @@ from queue import Empty, Queue
 
 from defaultlist import defaultlist
 
-from aoc import intcode, intcodeList
+from aoc import intcode, intcodeLambda
 
 EMPTY = 0
 WALL = 1
@@ -45,10 +45,11 @@ def part2(input):
     for i, v in enumerate(input[0].split(",")):
         software[i] = int(v)
     software[0] = 2  # free game !
-    inl = [NEUTRAL]
+    joystick = NEUTRAL
+    inl = lambda: joystick
     outq = Queue()
     arcade = threading.Thread(
-        name="ARCADE", target=intcodeList, args=("ARCADE", software, inl, outq)
+        name="ARCADE", target=intcodeLambda, args=("ARCADE", software, inl, outq)
     )
     paddle_x, ball_x = 0, 0
     arcade.start()
@@ -68,7 +69,6 @@ def part2(input):
                     joystick = LEFT
                 elif paddle_x < ball_x:
                     joystick = RIGHT
-                inl[0] = joystick
     except Empty:
         return score
 

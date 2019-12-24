@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 isort = "*"
+black = "*"
 
 [packages]
 anytree = "*"
@@ -12,3 +13,6 @@ defaultlist = "*"
 
 [requires]
 python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true

@@ -24,8 +24,7 @@ def compute_id(p):
 
 
 if __name__ == "__main__":
-    with open("05.txt") as f:
-        passes = map(str.strip, f.readlines())
+    passes = [line.strip() for line in open("05.txt")]
     ids = []
     for p in passes:
         seat_id = compute_id(p)

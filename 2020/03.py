@@ -16,7 +16,7 @@ def try_slope(slope, map):
 
 
 if __name__ == "__main__":
-    map = [line.strip() for line in open("03.txt").readlines()]
+    map = [line.strip() for line in open("03.txt")]
     print(try_slope((3, 1), map), "trees encountered")
     print(
         reduce(

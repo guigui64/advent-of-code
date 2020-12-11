@@ -4,9 +4,9 @@ from itertools import combinations
 
 
 def solve(fname, size):
-    numbers = list(map(int, open(fname).read().split("\n")[:-1]))
+    numbers = [int(line) for line in open(fname)]
     for i in range(size, len(numbers)):
-        sums = map(sum, combinations(numbers[i - size : i], 2))
+        sums = [sum(c) for c in combinations(numbers[i - size : i], 2)]
         if numbers[i] not in sums:
             incorrect = numbers[i]
             print("first incorrect number", incorrect)

@@ -38,7 +38,7 @@ def alter(instructions, index, pat, subst):
 
 
 if __name__ == "__main__":
-    instructions = open("08.txt").read().split("\n")[:-1]
+    instructions = [line.strip() for line in open("08.txt")]
     print("infinite loop:", exec_once(instructions)[1])
     for pat, subst in [("nop", "jmp"), ("jmp", "nop")]:
         indices = [i for i, line in enumerate(instructions) if pat in line]

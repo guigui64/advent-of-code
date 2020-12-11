@@ -5,7 +5,7 @@ from itertools import combinations
 if __name__ == "__main__":
 
     with open("01.txt") as f:
-        numbers = [int(x) for x in f.readlines()]
+        numbers = [int(x) for x in f]
     for a, b in combinations(numbers, 2):
         if a + b == 2020:
             print(a * b)

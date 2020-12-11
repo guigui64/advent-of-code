@@ -9,7 +9,7 @@ if __name__ == "__main__":
     valid2 = 0
     entries = []
     with open("02.txt") as f:
-        for line in f.readlines():
+        for line in f:
             match = pattern.fullmatch(line.strip())
             min, max = map(int, match.group(1, 2))
             letter, password = match.group(3, 4)

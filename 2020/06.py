@@ -3,7 +3,7 @@
 if __name__ == "__main__":
     groups = open("06.txt").read().split("\n\n")
     print(sum([len(set("".join(g.split()))) for g in groups]))
-    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    alphabet = [chr(x) for x in range(ord("a"), ord("z") + 1)]
     print(
         sum(
             [

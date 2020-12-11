@@ -1,27 +1,25 @@
 #!/usr/bin/env python
 
+from collections import Counter
+from itertools import groupby
+from math import prod
 
-def solve(fname, part=1):
-    numbers = list(map(int, open(fname).read().split("\n")[:-1]))
-    joltage = 0
-    diffs = [0] * 3
-    while len(numbers) > 0:
-        found = False
-        for offset in range(1, 4):
-            if part == 1 and found:
-                break
-            for i, jolt in enumerate(numbers):
-                if joltage + offset == jolt:
-                    joltage = jolt
-                    numbers = numbers[:i] + numbers[i + 1 :]
-                    diffs[offset - 1] += 1
-                    found = True
-                    break
-    diffs[2] += 1
-    return diffs[0] * diffs[2]
+
+tribonaccish = [1, 1, 1, 2, 4, 7]
+
+
+def solve(fname):
+    adapters = sorted([int(line) for line in open(fname)])
+    sequence = [0] + adapters + [adapters[-1] + 3]
+    diffs = []
+    for i in range(len(sequence) - 1):
+        diffs += [sequence[i + 1] - sequence[i]]
+    cdiff = Counter(diffs)
+    consecutive1s = [list(g) for k, g in groupby(diffs) if k == 1]
+    combinations = prod(tribonaccish[len(g) + 1] for g in consecutive1s)
+    print(sequence, diffs, cdiff, cdiff[3] * cdiff[1], consecutive1s, combinations)
 
 
 if __name__ == "__main__":
     # solve("10ex.txt")
-    print("part1:", solve("10.txt"))
-    print("part2:", solve("10.txt", 2))
+    solve("10.txt")

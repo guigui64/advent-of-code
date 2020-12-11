@@ -21,9 +21,7 @@ if __name__ == "__main__":
         name, content = line.split(" bags contain ")
         bags_tree[name].name = name
         if content != "no other bags":
-            content = map(
-                lambda x: pattern.fullmatch(x).group(1, 2), content.split(", ")
-            )
+            content = [pattern.fullmatch(x).group(1, 2) for x in content.split(", ")]
             for n, bag in content:
                 bags_tree[name].children.append((bag, int(n)))
                 bags_tree[bag].parents.append(name)

@@ -35,7 +35,7 @@ if __name__ == "__main__":
         else:  # turn
             if cmd == "L":
                 value = -value
-            direction = (direction + int(value / 90)) % len(directions)
+            direction = (direction + value // 90) % len(directions)
     print("part1:", sum([abs(p) for p in pos]))
     waypoint = [10, -1]
     pos = [0, 0]

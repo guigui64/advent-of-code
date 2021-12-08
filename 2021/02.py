@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+import aoc
 
 
 def move(pos, depth, order):
@@ -27,17 +28,14 @@ def move_aim(pos, depth, aim, order):
 
 
 if __name__ == "__main__":
-    file = "02.txt"
-    # file = "02.ex"
     # part 1
     pos, depth = 0, 0
-    with open(file) as f:
-        for line in f:
-            pos, depth = move(pos, depth, line.strip())
-        print(pos * depth)
+    lines = aoc.input()
+    for line in lines:
+        pos, depth = move(pos, depth, line)
+    print(pos * depth)
     # part 2
     pos, depth, aim = 0, 0, 0
-    with open(file) as f:
-        for line in f:
-            pos, depth, aim = move_aim(pos, depth, aim, line.strip())
-        print(pos * depth)
+    for line in lines:
+        pos, depth, aim = move_aim(pos, depth, aim, line)
+    print(pos * depth)

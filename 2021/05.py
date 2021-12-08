@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+import aoc
 import sys
 from collections import Counter
 
@@ -7,7 +8,9 @@ from collections import Counter
 def compute_spots(lines, diag=False):
     spots = []
     for line in lines:
-        (x1, y1), (x2, y2) = [(int(i), int(j)) for (i, j) in [coord.split(",") for coord in line.strip().split(" -> ")]]
+        (x1, y1), (x2, y2) = [
+            (int(i), int(j)) for (i, j) in [coord.split(",") for coord in line.split(" -> ")]
+        ]
         if x1 == x2:
             for y in range(min(y1, y2), max(y1, y2) + 1):
                 spots += [(x1, y)]
@@ -22,9 +25,7 @@ def compute_spots(lines, diag=False):
 
 
 if __name__ == "__main__":
-    fn = sys.argv[1] if len(sys.argv) > 1 else "05.txt"
-    with open(fn) as f:
-        lines = f.readlines()
+    lines = aoc.input()
     for diag in [False, True]:
         spots = compute_spots(lines, diag)
         c = Counter(spots)

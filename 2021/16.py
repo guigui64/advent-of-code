@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import aoc
-import math
+from math import prod
 
 
 def read_int(bits, size, base=2):
@@ -49,8 +49,8 @@ def parse_packet(bits, versions):
             packet_length += subpackets_lengths
         if type == 0:  # sum
             value = sum(values)
-        elif type == 1:
-            value = math.prod(values)
+        elif type == 1:  # prod
+            value = prod(values)
         elif type == 2:  # min
             value = min(values)
         elif type == 3:  # max

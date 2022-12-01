@@ -22,3 +22,7 @@ function partX(i: 1 | 2) {
 
 export const part1 = partX(1);
 export const part2 = partX(2);
+
+export function sum(a: number[]) {
+  return a.reduce((a, c) => a + c);
+}

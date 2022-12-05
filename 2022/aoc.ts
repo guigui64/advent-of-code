@@ -26,3 +26,7 @@ export const part2 = partX(2);
 export function sum(a: number[]) {
   return a.reduce((a, c) => a + c);
 }
+
+export function max(a: number[]) {
+  return a.reduce((max, c) => (c > max ? c : max));
+}

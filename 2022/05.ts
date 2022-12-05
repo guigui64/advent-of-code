@@ -1,4 +1,4 @@
-import { max, part1, part2, readLines } from "./aoc.ts";
+import { max, part1, part2, printTime, readLines, startTimer } from "./aoc.ts";
 
 const example = false;
 const lines = readLines(example);
@@ -11,7 +11,7 @@ function countStacks(lines: string[]) {
   }
   return [i, max(lines[i].trim().split(/\s+/).map(Number))];
 }
-
+startTimer();
 const [border, count] = countStacks(lines);
 // build stacks
 const stacks: string[][] = [];
@@ -43,3 +43,4 @@ for (const instruction of lines.slice(border + 2)) {
 }
 part1(stacks.map((s) => s.pop()).join(""));
 part2(stacks2.map((s) => s.pop()).join(""));
+printTime();

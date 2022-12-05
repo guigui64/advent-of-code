@@ -1,4 +1,4 @@
-import { part1, part2, readLines } from "./aoc.ts";
+import { part1, part2, printTime, readLines, startTimer } from "./aoc.ts";
 
 // A/X == Rock
 // B/Y == Paper
@@ -45,6 +45,7 @@ function translate(round: string) {
   }
 }
 
+startTimer();
 // first compute score for each combo
 const scores: { [index: string]: number } = {};
 for (const opponent of "ABC") {
@@ -58,3 +59,4 @@ for (const opponent of "ABC") {
 const rounds = readLines(false);
 part1(rounds.reduce((acc, round) => acc + scores[round], 0));
 part2(rounds.map(translate).reduce((acc, round) => acc + scores[round], 0));
+printTime();

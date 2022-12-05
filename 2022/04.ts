@@ -1,4 +1,4 @@
-import { part1, part2, readLines } from "./aoc.ts";
+import { part1, part2, printTime, readLines, startTimer } from "./aoc.ts";
 
 const lines = readLines(false);
 
@@ -15,12 +15,13 @@ function overlap(big: number[], small: number[]) {
   return (b0 <= s0 && s0 <= b1) || (b0 <= s1 && s1 <= b1);
 }
 
+startTimer();
 let cntContained = 0;
 let cntOverlap = 0;
 for (const pair of lines) {
-  const [sections1, sections2] = pair.split(",").map((s) =>
-    s.split("-").map(Number)
-  );
+  const [sections1, sections2] = pair
+    .split(",")
+    .map((s) => s.split("-").map(Number));
   const [biggest, smallest] = len(sections1) > len(sections2)
     ? [sections1, sections2]
     : [sections2, sections1];
@@ -30,7 +31,8 @@ for (const pair of lines) {
   if (overlap(biggest, smallest)) {
     cntOverlap++;
   }
-  console.log(pair, cntContained, cntOverlap);
+  // console.log(pair, cntContained, cntOverlap);
 }
 part1(cntContained);
 part2(cntOverlap);
+printTime();

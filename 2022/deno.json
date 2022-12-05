@@ -1,0 +1,5 @@
+{
+  "tasks": {
+    "watch": "deno run --allow-read --watch $(fdfind '\\d+\\.ts' -d 1 . | tac | fzf)"
+  }
+}

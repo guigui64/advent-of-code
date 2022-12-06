@@ -52,3 +52,7 @@ export function sum(a: number[]) {
 export function max(a: number[]) {
   return a.reduce((max, c) => (c > max ? c : max));
 }
+
+export function combinations<T>(array: T[]) {
+  return array.flatMap((v, i) => array.slice(i + 1).map((w) => [w, v]));
+}

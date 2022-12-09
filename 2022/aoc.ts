@@ -52,3 +52,14 @@ export function sum(a: number[]) {
 export function combinations<T>(array: T[]) {
   return array.flatMap((v, i) => array.slice(i + 1).map((w) => [w, v]));
 }
+
+let debug = false;
+export function setDebug(d: boolean) {
+  debug = d;
+}
+// deno-lint-ignore no-explicit-any
+export function log(...a: any[]) {
+  if (debug) {
+    console.log(...a);
+  }
+}

@@ -9,6 +9,7 @@
     "https://deno.land/std@0.166.0/testing/_diff.ts": "a23e7fc2b4d8daa3e158fa06856bedf5334ce2a2831e8bf9e509717f455adb2c",
     "https://deno.land/std@0.166.0/testing/_format.ts": "cd11136e1797791045e639e9f0f4640d5b4166148796cad37e6ef75f7d7f3832",
     "https://deno.land/std@0.166.0/testing/asserts.ts": "1e340c589853e82e0807629ba31a43c84ebdcdeca910c4a9705715dfdb0f5ce8",
+    "https://deno.land/x/dijkstra@1.0.2/mod.ts": "3bda39a11bf16c62917ba5d25cac78d26a952b5b109e67440f4c3ab06aeb707d",
     "https://deno.land/x/sort@v1.1.1/mod.ts": "91d950d976c1b6b31d55dfd2f946736bfb748eb888b5edbae0a9a8c8ace9b880",
     "https://deno.land/x/sort@v1.1.1/src/sort-service.ts": "bb843b0a22d0e49d5e5f0b6c0ae15738cebd5ff6e6b697bbbc244bcb7012cb94",
     "https://deno.land/x/sum@v1.1.0/mod.ts": "e9f9e31fe16dede9c4b24eb359bef92c4ce7e6d192c1d644042c82d8fd727006"

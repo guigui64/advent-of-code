@@ -49,8 +49,11 @@ export function sum(a: number[]) {
   return a.reduce((a, c) => a + c);
 }
 
-export function combinations<T>(array: T[]) {
-  return array.flatMap((v, i) => array.slice(i + 1).map((w) => [w, v]));
+export function combinations<T>(array1: T[], array2?: T[]) {
+  if (array2) {
+    return array2.flatMap((x2) => array1.map((x1) => [x1, x2]));
+  }
+  return array1.flatMap((v, i) => array1.slice(i + 1).map((w) => [w, v]));
 }
 
 let debug = false;

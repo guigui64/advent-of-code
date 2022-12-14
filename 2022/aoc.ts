@@ -66,3 +66,27 @@ export function log(...a: any[]) {
     console.log(...a);
   }
 }
+
+export function BFS<T>(
+  neighbors: (node: T) => T[],
+  root: T,
+  goal: (node: T) => boolean,
+  key: (node: T) => string,
+): { Q: T[]; explored: string[] } {
+  const Q: T[] = [];
+  const explored: string[] = [key(root)];
+  Q.push(root);
+  while (Q.length > 0) {
+    const v = Q.pop()!;
+    if (goal(v)) {
+      break;
+    }
+    for (const n of neighbors(v)) {
+      if (!explored.includes(key(n))) {
+        explored.push(key(n));
+        Q.push(n);
+      }
+    }
+  }
+  return { Q, explored };
+}

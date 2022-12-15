@@ -1,7 +1,18 @@
-import { part1, part2, printTime, readLines, startTimer } from "./aoc.ts";
+import {
+  log,
+  part1,
+  part2,
+  printTime,
+  readLines,
+  setDebug,
+  startTimer,
+} from "./aoc.ts";
 
 startTimer();
-const lines = readLines();
+const example = true;
+setDebug(example);
+const lines = readLines(example);
+log(lines);
 
 // part1
 part1("TODO");

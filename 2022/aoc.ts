@@ -1,5 +1,7 @@
 import { basename, extname } from "https://deno.land/std@0.166.0/path/posix.ts";
 
+export type Point = number[];
+
 export function read(ex = false) {
   const tsName = basename(Deno.mainModule);
   const filename = tsName.replace(extname(tsName), (ex ? "ex" : "") + ".txt");

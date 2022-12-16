@@ -3,6 +3,7 @@ import {
   part1,
   part2,
   printTime,
+  range,
   readLines,
   setDebug,
   startTimer,
@@ -10,23 +11,34 @@ import {
 
 startTimer();
 const example = false;
-setDebug(example);
+setDebug(true);
 const lines = readLines(example);
 
 type Point = number[];
-type Line = Point[];
-const scan: Line[] = [];
+const rocks: Point[] = [];
+let abyss = 0;
 for (const line of lines) {
   const points = line.split(" -> ").map((ps) => ps.split(",").map(Number));
   for (let i = 0; i < points.length - 1; i++) {
-    scan.push(points.slice(i, i + 2));
+    const line = points.slice(i, i + 2);
+    const minx = Math.min(...line.map((p) => p[0]));
+    const maxx = Math.max(...line.map((p) => p[0]));
+    const miny = Math.min(...line.map((p) => p[1]));
+    const maxy = Math.max(...line.map((p) => p[1]));
+    abyss = Math.max(abyss, maxy);
+    if (minx === maxx) {
+      rocks.push(...range(maxy - miny + 1, miny).map((y) => [minx, y]));
+    } else {
+      rocks.push(...range(maxx - minx + 1, minx).map((x) => [x, miny]));
+    }
   }
 }
-log(scan);
-const abyss =
-  Math.max(...scan.flatMap((line) => line.flatMap((point) => point[1]))) + 1;
+// const abyss = Math.max(...rocks.map((r) => r[1])) + 1;
 const floor = abyss + 1;
 log(abyss, floor);
+log(rocks.length);
+printTime();
+const rocks2 = rocks.map((r) => r[1] * (floor + 1) + r[0]);
 
 const orig: Point = [500, 0];
 const sand: string[] = [];
@@ -39,18 +51,7 @@ function occupied(point: Point): boolean {
   if (point[1] === floor) {
     return true;
   }
-  return scan.some((line) => {
-    const minx = Math.min(...line.map((p) => p[0]));
-    const maxx = Math.max(...line.map((p) => p[0]));
-    const miny = Math.min(...line.map((p) => p[1]));
-    const maxy = Math.max(...line.map((p) => p[1]));
-    return (
-      minx <= point[0] &&
-      point[0] <= maxx &&
-      miny <= point[1] &&
-      point[1] <= maxy
-    );
-  });
+  return rocks2.includes(point[1] * (floor + 1) + point[0]);
 }
 
 function next(from: Point): Point {
@@ -77,7 +78,7 @@ while (true) {
   } else {
     // come to rest
     sand.push(n.toString());
-    // Deno.stdout.write(new Uint8Array([".".charCodeAt(0)]));
+    if (sand.length % 1000 === 0) console.log(sand.length);
     if (n.toString() === orig.toString()) break;
     curr = [...orig];
   }

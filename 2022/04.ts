@@ -1,4 +1,4 @@
-import { part1, part2, printTime, readLines, startTimer } from "./aoc.ts";
+import { part1, part2, readLines } from "./aoc.ts";
 
 const lines = readLines(false);
 
@@ -15,7 +15,6 @@ function overlap(big: number[], small: number[]) {
   return (b0 <= s0 && s0 <= b1) || (b0 <= s1 && s1 <= b1);
 }
 
-startTimer();
 let cntContained = 0;
 let cntOverlap = 0;
 for (const pair of lines) {
@@ -35,4 +34,3 @@ for (const pair of lines) {
 }
 part1(cntContained);
 part2(cntOverlap);
-printTime();

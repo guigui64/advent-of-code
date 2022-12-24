@@ -1,15 +1,5 @@
-import {
-  log,
-  part1,
-  part2,
-  printTime,
-  read,
-  setDebug,
-  startTimer,
-  sum,
-} from "./aoc.ts";
+import { log, part1, part2, read, setDebug, sum } from "./aoc.ts";
 
-startTimer();
 const example = false;
 setDebug(example);
 const pairs = read(example)
@@ -55,10 +45,8 @@ part1(
       .map((cmp, i) => (cmp < 0 ? i + 1 : 0)),
   ),
 );
-printTime();
 
 // part2
 const packets = [...pairs.flat(), "[[2]]", "[[6]]"];
 packets.sort((left, right) => compare(eval(left), eval(right)));
 part2((packets.indexOf("[[2]]") + 1) * (packets.indexOf("[[6]]") + 1));
-printTime();

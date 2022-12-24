@@ -1,13 +1,4 @@
-import {
-  log,
-  part1,
-  part2,
-  printTime,
-  range,
-  readLines,
-  setDebug,
-  startTimer,
-} from "./aoc.ts";
+import { log, part1, part2, range, readLines, setDebug } from "./aoc.ts";
 
 class Monkey {
   id: number;
@@ -28,7 +19,6 @@ class Monkey {
   }
 }
 
-startTimer();
 const example = false;
 setDebug(example);
 const lines = readLines(example);
@@ -69,6 +59,9 @@ for (const part of [1, 2]) {
   const amounts = monkeys.map((m) => m.counter);
   log(amounts);
   amounts.sort((a, b) => b - a);
-  part1(amounts[0] * amounts[1]);
-  printTime();
+  if (part === 1) {
+    part1(amounts[0] * amounts[1]);
+  } else {
+    part2(amounts[0] * amounts[1]);
+  }
 }

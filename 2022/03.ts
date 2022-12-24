@@ -1,4 +1,4 @@
-import { part1, part2, printTime, readLines, startTimer } from "./aoc.ts";
+import { part1, part2, readLines } from "./aoc.ts";
 
 const lines = readLines(false);
 
@@ -8,7 +8,6 @@ function priority(letter: string) {
   );
 }
 
-startTimer();
 let p1 = 0;
 for (const line of lines) {
   const first = line.slice(0, line.length / 2);
@@ -20,7 +19,6 @@ for (const line of lines) {
   }
 }
 part1(p1);
-printTime();
 
 let p2 = 0;
 for (let i = 0; i < lines.length - 2; i += 3) {
@@ -32,4 +30,3 @@ for (let i = 0; i < lines.length - 2; i += 3) {
   }
 }
 part2(p2);
-printTime();

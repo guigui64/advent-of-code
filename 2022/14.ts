@@ -1,15 +1,5 @@
-import {
-  log,
-  part1,
-  part2,
-  printTime,
-  range,
-  readLines,
-  setDebug,
-  startTimer,
-} from "./aoc.ts";
+import { log, part1, part2, range, readLines, setDebug } from "./aoc.ts";
 
-startTimer();
 const example = false;
 setDebug(true);
 const lines = readLines(example);
@@ -37,7 +27,6 @@ for (const line of lines) {
 const floor = abyss + 1;
 log(abyss, floor);
 log(rocks.length);
-printTime();
 const rocks2 = rocks.map((r) => r[1] * (floor + 1) + r[0]);
 
 const orig: Point = [500, 0];
@@ -71,7 +60,6 @@ while (true) {
   if (!p1 && n[1] >= abyss) {
     p1 = true;
     part1(sand.length);
-    printTime();
   }
   if (n.toString() !== curr.toString()) {
     curr = [...n];
@@ -84,4 +72,3 @@ while (true) {
   }
 }
 part2(sand.length);
-printTime();

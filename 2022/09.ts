@@ -1,15 +1,5 @@
-import {
-  log,
-  part1,
-  part2,
-  printTime,
-  range,
-  readLines,
-  setDebug,
-  startTimer,
-} from "./aoc.ts";
+import { log, part1, part2, range, readLines, setDebug } from "./aoc.ts";
 
-startTimer();
 const lines = readLines(false);
 setDebug(false);
 
@@ -63,4 +53,3 @@ for (const line of lines) {
 log(visited);
 part1(visited[0].size);
 part2(visited[8].size);
-printTime();

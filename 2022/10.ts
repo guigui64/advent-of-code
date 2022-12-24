@@ -1,15 +1,5 @@
-import {
-  log,
-  part1,
-  part2,
-  printTime,
-  readLines,
-  setDebug,
-  startTimer,
-  sum,
-} from "./aoc.ts";
+import { log, part1, part2, readLines, setDebug, sum } from "./aoc.ts";
 
-startTimer();
 const example = true;
 setDebug(example);
 const lines = readLines(example);
@@ -52,6 +42,4 @@ for (let y = 0; y < 6; y++) {
   screen += "\n";
 }
 
-printTime();
 part2(screen);
-printTime();

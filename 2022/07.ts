@@ -1,4 +1,4 @@
-import { part1, part2, printTime, readLines, startTimer, sum } from "./aoc.ts";
+import { part1, part2, readLines, sum } from "./aoc.ts";
 
 class File {
   parent?: File;
@@ -27,7 +27,6 @@ class File {
   }
 }
 
-startTimer();
 const lines = readLines(false);
 const root = new File("/");
 let dir = root;
@@ -51,7 +50,6 @@ for (const line of lines) {
 }
 const total = root.getSize();
 part1(sum(Array.from(File.sizes.values()).filter((s) => s <= 100_000)));
-printTime();
 
 // part2
 part2(

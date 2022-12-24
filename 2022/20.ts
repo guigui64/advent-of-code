@@ -1,59 +1,18 @@
-import {
-  part1,
-  part2,
-  printTime,
-  range,
-  readLines,
-  setDebug,
-  startTimer,
-  sum,
-} from "./aoc.ts";
+import { part1, part2, readLines, setDebug, sum } from "./aoc.ts";
+import DLLEntry from "./list.ts";
 
-startTimer();
 const example = false;
 setDebug(example);
 const lines = readLines(example);
 const L = lines.length;
 
-class Node {
-  value: number;
-  next?: Node;
-  previous?: Node;
-
-  constructor(value: number) {
-    this.value = value;
-  }
-
-  toString() {
-    return `${this.previous?.value} -> [${this.value}] -> ${this.next?.value}`;
-  }
-
+class Node extends DLLEntry<number> {
   move() {
-    if (this.value === 0) return;
-    const move = Math.abs(this.value) % (L - 1);
-    // remove this from neighbors
-    this.previous!.next = this.next;
-    this.next!.previous = this.previous;
-    // find new position
-    for (let i = 0; i < move; i++) {
-      if (this.value > 0) {
-        this.next = this.next!.next;
-        this.previous = this.previous!.next;
-      } else {
-        this.next = this.previous;
-        this.previous = this.previous!.previous;
-      }
-    }
-    // insert this
-    this.previous!.next = this;
-    this.next!.previous = this;
+    return super.move(this.value, L);
   }
 
   get(delta: number) {
-    // deno-lint-ignore no-this-alias
-    let n: Node = this;
-    range(delta % L).forEach(() => n = n.next!);
-    return n.value;
+    return super.get(delta, L);
   }
 }
 
@@ -74,9 +33,7 @@ while (Q.length > 0) {
 part1(sum(
   [1000, 2000, 3000].map((x) => x % L).map((x) => zero.get(x)),
 ));
-printTime();
 
-startTimer();
 const key = 811589153;
 Q = [];
 for (const line of lines) {
@@ -97,4 +54,3 @@ for (let i = 0; i < 10; i++) {
 part2(sum(
   [1000, 2000, 3000].map((x) => x % L).map((x) => zero.get(x)),
 ));
-printTime();

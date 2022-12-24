@@ -4,16 +4,13 @@ import {
   log,
   part1,
   part2,
-  printTime,
   range,
   readLines,
   setDebug,
-  startTimer,
 } from "./aoc.ts";
 
 type Point = number[];
 
-startTimer();
 const example = false;
 setDebug(example);
 const lines = readLines(example);
@@ -73,7 +70,6 @@ const path = dijkstra.find_path(graph, key(start), key(end));
 log(path);
 
 part1(path.length - 1);
-printTime();
 
 const paths = combinations(range(W), range(H))
   .filter(([x, y]) => lines[y][x] === "a")
@@ -90,4 +86,3 @@ paths.sort((p1, p2) => p1.length - p2.length);
 
 log(paths[0]);
 part2(Math.min(...paths.map((p) => p.length - 1)));
-printTime();

@@ -5,6 +5,7 @@ export type Point = number[];
 export function read(ex = false) {
   const tsName = basename(Deno.mainModule);
   const filename = tsName.replace(extname(tsName), (ex ? "ex" : "") + ".txt");
+  console.time("took");
   return Deno.readTextFileSync(filename);
 }
 
@@ -17,31 +18,12 @@ export function range(size: number, startAt = 0) {
   return [...Array(size).keys()].map((i) => i + startAt);
 }
 
-let time: number | null = null;
-export function startTimer() {
-  time = Date.now();
-  console.log("🎬");
-}
-
-function delta(to: number) {
-  let d = to - time!;
-  let s = "";
-  if (d > 1000) {
-    const seconds = Math.abs(d / 1000);
-    d -= 1000 * seconds;
-    s += seconds + "s";
-  }
-  s += d + "ms";
-  return s;
-}
-
-export function printTime() {
-  console.log(`🏁 ${delta(Date.now())}`);
-}
-
 function partX(i: 1 | 2) {
   // deno-lint-ignore no-explicit-any
-  return (...data: any[]) => console.log(`Part${i}:`, ...data);
+  return (...data: any[]) => {
+    console.log(`Part${i}:`, ...data);
+    console.timeLog("took");
+  };
 }
 
 export const part1 = partX(1);
@@ -69,26 +51,58 @@ export function log(...a: any[]) {
   }
 }
 
-export function BFS<T>(
-  neighbors: (node: T) => T[],
-  root: T,
-  goal: (node: T) => boolean,
-  key: (node: T) => string,
-): { Q: T[]; explored: string[] } {
-  const Q: T[] = [];
-  const explored: string[] = [key(root)];
-  Q.push(root);
+/* export function BFS<T>({ neighbors, root, key, ignore, goal }: {
+  neighbors: (node: T) => T[];
+  root: T;
+  key: (node: T) => string;
+  ignore?: (node: T) => boolean;
+  goal?: (node: T) => boolean;
+}): { Q: T[]; explored: Set<string> } {
+  const Q = [root];
+  const explored = new Set<string>([key(root)]);
   while (Q.length > 0) {
-    const v = Q.pop()!;
-    if (goal(v)) {
-      break;
-    }
-    for (const n of neighbors(v)) {
-      if (!explored.includes(key(n))) {
-        explored.push(key(n));
-        Q.push(n);
-      }
-    }
+    const v = Q.shift()!;
+    // if (explored.has(key(v))) continue;
+    if (goal && goal(v)) break;
+    if (ignore && ignore(v)) continue;
+    // explored.add(key(v));
+    neighbors(v).filter((n) => !explored.has(key(n))).forEach((n) => {
+      explored.add(key(n));
+      Q.push(n);
+    });
+    // Q.push(...neighbors(v));
   }
   return { Q, explored };
+} */
+
+export class Cube {
+  x: number;
+  y: number;
+  z: number;
+
+  constructor(x: number, y: number, z: number) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+  static parse(line: string) {
+    const [x, y, z] = line.split(",").map(Number);
+    return new Cube(x, y, z);
+  }
+
+  toString() {
+    return [this.x, this.y, this.z].join(",");
+  }
+
+  neighbors(): Cube[] {
+    return [
+      [1, 0, 0],
+      [-1, 0, 0],
+      [0, 1, 0],
+      [0, -1, 0],
+      [0, 0, 1],
+      [0, 0, -1],
+    ].map(([dx, dy, dz]) => new Cube(this.x + dx, this.y + dy, this.z + dz));
+  }
 }

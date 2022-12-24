@@ -1,15 +1,5 @@
-import {
-  part1,
-  part2,
-  Point,
-  printTime,
-  readLines,
-  setDebug,
-  startTimer,
-  sum,
-} from "./aoc.ts";
+import { part1, part2, Point, readLines, setDebug, sum } from "./aoc.ts";
 
-startTimer();
 const example = false;
 setDebug(example);
 const lines = readLines(example);
@@ -100,7 +90,6 @@ function beacons(row: number) {
 
 const sensors = lines.map((l) => new Sensor(l));
 part1(sum(ranges(y).map((r) => r.size())) - beacons(y).length);
-printTime();
 
 const size = example ? 20 : 4_000_000;
 
@@ -113,4 +102,3 @@ for (let row = size - 1; row > -1; row--) {
     break;
   }
 }
-printTime();

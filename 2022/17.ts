@@ -1,15 +1,5 @@
-import {
-  log,
-  part1,
-  part2,
-  printTime,
-  range,
-  readLines,
-  setDebug,
-  startTimer,
-} from "./aoc.ts";
+import { part1, part2, range, readLines, setDebug } from "./aoc.ts";
 
-startTimer();
 const example = true;
 setDebug(example);
 const instructions = readLines(example)[0];
@@ -177,12 +167,10 @@ for (let turn = 0; turn < p2; turn++) {
   ir = (ir + 1) % rocks.length;
   if (turn === p1 - 1) {
     part1(height);
-    printTime();
   }
   if (turn / p2 * 100 % 1 === 0) {
     console.log(turn / p2 * 100, "%");
-    printTime();
+    console.timeLog("took");
   }
 }
 part2(height);
-printTime();

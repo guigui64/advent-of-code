@@ -1,13 +1,5 @@
-import {
-  part1,
-  part2,
-  printTime,
-  range,
-  readLines,
-  startTimer,
-} from "./aoc.ts";
+import { part1, part2, range, readLines } from "./aoc.ts";
 
-startTimer();
 const map = readLines(false);
 const H = map.length;
 const W = map[0].length;
@@ -58,4 +50,3 @@ for (let x = 1; x < W - 1; x++) {
 }
 part1(visible);
 part2(maxScenicScore);
-printTime();

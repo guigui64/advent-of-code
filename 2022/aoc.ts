@@ -30,7 +30,7 @@ export const part1 = partX(1);
 export const part2 = partX(2);
 
 export function sum(a: number[]) {
-  return a.reduce((a, c) => a + c);
+  return a.reduce((a, c) => a + c, 0);
 }
 
 export function combinations<T>(array1: T[], array2?: T[]) {

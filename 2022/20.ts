@@ -1,56 +1,22 @@
-import { part1, part2, readLines, setDebug, sum } from "./aoc.ts";
-import DLLEntry from "./list.ts";
+import { part1, part2, range, readLines, setDebug, sum } from "./aoc.ts";
+import { makeDLL } from "./list.ts";
 
 const example = false;
 setDebug(example);
 const lines = readLines(example);
 const L = lines.length;
 
-class Node extends DLLEntry<number> {
-  move() {
-    return super.move(this.value, L);
-  }
-
-  get(delta: number) {
-    return super.get(delta, L);
-  }
-}
-
-let Q = [];
-for (const line of lines) {
-  Q.push(new Node(parseInt(line)));
-  if (Q.length > 1) {
-    Q[Q.length - 2].next = Q[Q.length - 1];
-    Q[Q.length - 1].previous = Q[Q.length - 2];
-  }
-}
-Q[Q.length - 1].next = Q[0];
-Q[0].previous = Q[Q.length - 1];
+let Q = makeDLL(lines.map(Number));
 let zero = Q.find((n) => n.value === 0)!;
-while (Q.length > 0) {
-  Q.shift()!.move();
-}
+Q.forEach((q) => q.move(q.value, L));
 part1(sum(
-  [1000, 2000, 3000].map((x) => x % L).map((x) => zero.get(x)),
+  [1000, 2000, 3000].map((x) => x % L).map((x) => zero.get(x, L)),
 ));
 
 const key = 811589153;
-Q = [];
-for (const line of lines) {
-  Q.push(new Node(key * parseInt(line)));
-  if (Q.length > 1) {
-    Q[Q.length - 2].next = Q[Q.length - 1];
-    Q[Q.length - 1].previous = Q[Q.length - 2];
-  }
-}
-Q[Q.length - 1].next = Q[0];
-Q[0].previous = Q[Q.length - 1];
+Q = makeDLL(lines.map((l) => key * parseInt(l)));
 zero = Q.find((n) => n.value === 0)!;
-for (let i = 0; i < 10; i++) {
-  for (let q = 0; q < Q.length; q++) {
-    Q[q].move();
-  }
-}
+range(10).forEach((_) => Q.forEach((q) => q.move(q.value, L)));
 part2(sum(
-  [1000, 2000, 3000].map((x) => x % L).map((x) => zero.get(x)),
+  [1000, 2000, 3000].map((x) => x % L).map((x) => zero.get(x, L)),
 ));

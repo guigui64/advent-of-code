@@ -53,8 +53,9 @@ while (!numbers["root"]) {
   }
 }
 
-// part1
 part1(numbers["root"]);
 
 // part2
+// first, simplify input by computing all constant numbers (monkeys that do not depend on humn)
+// then, resolve root's equation
 part2("TODO");

@@ -1,8 +1,7 @@
-import { log, part1, part2, readLines, setDebug } from "./aoc.ts";
+import { log, part1, part2, readLines } from "./aoc.ts";
 
-const example = true;
-setDebug(example);
-const lines = readLines(example);
+globalThis.example = true;
+const lines = readLines();
 log(lines);
 
 // part1

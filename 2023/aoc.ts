@@ -2,15 +2,18 @@ import { basename, extname } from "https://deno.land/std@0.166.0/path/posix.ts";
 
 export type Point = number[];
 
-export function read(ex = false) {
+export function read() {
   const tsName = basename(Deno.mainModule);
-  const filename = tsName.replace(extname(tsName), (ex ? "ex2" : "") + ".txt");
+  const filename = tsName.replace(
+    extname(tsName),
+    (globalThis.example ? "ex2" : "") + ".txt",
+  );
   console.time("took");
   return Deno.readTextFileSync(filename);
 }
 
-export function readLines(ex = false) {
-  const lines = read(ex).split("\n");
+export function readLines() {
+  const lines = read().split("\n");
   return lines.slice(0, -1); // remove trailing newline
 }
 
@@ -40,13 +43,9 @@ export function combinations<T>(array1: T[], array2?: T[]) {
   return array1.flatMap((v, i) => array1.slice(i + 1).map((w) => [w, v]));
 }
 
-let debug = false;
-export function setDebug(d: boolean) {
-  debug = d;
-}
 // deno-lint-ignore no-explicit-any
 export function log(...a: any[]) {
-  if (debug) {
+  if (globalThis.example || globalThis.verbose) {
     console.log(...a);
   }
 }

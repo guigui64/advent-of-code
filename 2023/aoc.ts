@@ -6,7 +6,7 @@ export function read() {
   const tsName = basename(Deno.mainModule);
   const filename = tsName.replace(
     extname(tsName),
-    (globalThis.example ? "ex2" : "") + ".txt",
+    (globalThis.example ? "ex" : "") + ".txt",
   );
   console.time("took");
   return Deno.readTextFileSync(filename);
@@ -34,6 +34,9 @@ export const part2 = partX(2);
 
 export function sum(a: number[]) {
   return a.reduce((a, c) => a + c, 0);
+}
+export function product(a: number[]) {
+  return a.reduce((a, c) => a * c, 1);
 }
 
 export function combinations<T>(array1: T[], array2?: T[]) {

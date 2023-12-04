@@ -46,6 +46,12 @@ export function combinations<T>(array1: T[], array2?: T[]) {
   return array1.flatMap((v, i) => array1.slice(i + 1).map((w) => [w, v]));
 }
 
+export function surrounding(x: number, y: number) {
+  return combinations([-1, 0, 1], [-1, 0, 1])
+    .filter(([dx, dy]) => dx !== 0 || dy !== 0)
+    .map(([dx, dy]) => [x + dx, y + dy]);
+}
+
 // deno-lint-ignore no-explicit-any
 export function log(...a: any[]) {
   if (globalThis.example || globalThis.verbose) {

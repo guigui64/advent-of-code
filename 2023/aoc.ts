@@ -114,3 +114,29 @@ export class Cube {
     ].map(([dx, dy, dz]) => new Cube(this.x + dx, this.y + dy, this.z + dz));
   }
 }
+
+export class DefaultDict<K, V> extends Map<K, V> {
+  defaultFunc: () => V;
+  constructor(defaultFunc: () => V) {
+    super();
+    this.defaultFunc = defaultFunc;
+  }
+  get(key: K) {
+    if (!this.has(key)) {
+      this.set(key, this.defaultFunc());
+    }
+    return super.get(key)!;
+  }
+}
+
+export class Counter<K> extends DefaultDict<K, number> {
+  constructor() {
+    super(Number);
+  }
+  inc(key: K, by?: number) {
+    this.set(key, this.get(key) + (by ?? 1));
+  }
+  dec(key: K, by?: number) {
+    this.set(key, this.get(key) - (by ?? 1));
+  }
+}

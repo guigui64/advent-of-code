@@ -6,7 +6,7 @@ export function read() {
   const tsName = basename(Deno.mainModule);
   const filename = tsName.replace(
     extname(tsName),
-    (globalThis.example ? "ex" : "") + ".txt",
+    (globalThis.example ? "ex2" : "") + ".txt",
   );
   console.time("took");
   return Deno.readTextFileSync(filename);
@@ -139,4 +139,10 @@ export class Counter<K> extends DefaultDict<K, number> {
   dec(key: K, by?: number) {
     this.set(key, this.get(key) - (by ?? 1));
   }
+}
+
+export function count<T>(a: T[]): Counter<T> {
+  const c = new Counter<T>();
+  a.forEach((x) => c.inc(x));
+  return c;
 }

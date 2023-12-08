@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "watch": "deno run --allow-read --watch $(fdfind '\\d+\\.ts' -d 1 . | tac | fzf)",
-    "once": "deno run --allow-read $(fdfind '\\d+\\.ts' -d 1 . | tac | fzf)"
+    "watch": "deno run --allow-read --watch $(fd '\\d+\\.ts' -d 1 . | tail -r | fzf)",
+    "once": "deno run --allow-read $(fd '\\d+\\.ts' -d 1 . | tail -r | fzf)"
   }
 }

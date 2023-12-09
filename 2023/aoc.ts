@@ -6,7 +6,7 @@ export function read() {
   const tsName = basename(Deno.mainModule);
   const filename = tsName.replace(
     extname(tsName),
-    (globalThis.example ? "ex2" : "") + ".txt",
+    (globalThis.example ? "ex" : "") + ".txt",
   );
   console.time("took");
   return Deno.readTextFileSync(filename);

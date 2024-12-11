@@ -2,3 +2,7 @@
 Session.vim
 
 .DS_Store
+
+# do not commit input files but allow example input files
+*.txt
+!*ex.txt

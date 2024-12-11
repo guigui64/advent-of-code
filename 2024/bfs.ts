@@ -1,5 +1,5 @@
 // Define the Node interface for the graph
-type Node<T> = {
+export type Node<T> = {
   value: T;
   adjacent: Node<T>[];
 };
@@ -83,3 +83,89 @@ export function BFS<T>(startNode: Node<T>, targetValue: T): Node<T> | null {
 // console.log(
 //   result ? `Found node with value ${result.value}` : "Value not found",
 // );
+
+// Path type to store both the node and the path taken to reach it
+interface PathNode<T> {
+  node: Node<T>;
+  path: Node<T>[];
+}
+
+export function findAllPaths<T>(
+  startNode: Node<T>,
+  targetValue: T,
+): Node<T>[][] {
+  // Store all found paths
+  const allPaths: Node<T>[][] = [];
+
+  // Queue will store nodes along with their paths
+  const queue = new Queue<PathNode<T>>();
+  queue.enqueue({ node: startNode, path: [startNode] });
+
+  while (!queue.isEmpty()) {
+    const currentPath = queue.dequeue();
+    if (!currentPath) continue;
+
+    const { node: currentNode, path: currentNodePath } = currentPath;
+
+    // If we found target value, add the path to our results
+    if (currentNode.value === targetValue) {
+      allPaths.push([...currentNodePath]);
+      continue;
+    }
+
+    // Process adjacent nodes
+    for (const adjacentNode of currentNode.adjacent) {
+      // Skip if this would create a cycle
+      if (currentNodePath.includes(adjacentNode)) continue;
+
+      // Create new path including this adjacent node
+      const newPath = [...currentNodePath, adjacentNode];
+      queue.enqueue({
+        node: adjacentNode,
+        path: newPath,
+      });
+    }
+  }
+
+  return allPaths;
+}
+
+export function findAllTargets<T>(
+  startNode: Node<T>,
+  targetValue: T,
+): Set<Node<T>> {
+  // Store all found paths
+  const allTargets: Set<Node<T>> = new Set();
+
+  // Queue will store nodes along with their paths
+  const queue = new Queue<PathNode<T>>();
+  queue.enqueue({ node: startNode, path: [startNode] });
+
+  while (!queue.isEmpty()) {
+    const currentPath = queue.dequeue();
+    if (!currentPath) continue;
+
+    const { node: currentNode, path: currentNodePath } = currentPath;
+
+    // If we found target value, add the path to our results
+    if (currentNode.value === targetValue) {
+      allTargets.add(currentNode);
+      continue;
+    }
+
+    // Process adjacent nodes
+    for (const adjacentNode of currentNode.adjacent) {
+      // Skip if this would create a cycle
+      if (currentNodePath.includes(adjacentNode)) continue;
+
+      // Create new path including this adjacent node
+      const newPath = [...currentNodePath, adjacentNode];
+      queue.enqueue({
+        node: adjacentNode,
+        path: newPath,
+      });
+    }
+  }
+
+  return allTargets;
+}
